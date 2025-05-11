@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { Checkbox } from "vscrui"
 import { VSCodeTextField, VSCodeRadio, VSCodeRadioGroup } from "@vscode/webview-ui-toolkit/react"
 
@@ -18,6 +18,7 @@ type BedrockProps = {
 
 export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedModelInfo }: BedrockProps) => {
 	const { t } = useAppTranslation()
+	const [awsEndpointSelected, setAwsEndpointSelected] = useState(!!apiConfiguration?.awsBedrockEndpoint)
 
 	const handleInputChange = useCallback(
 		<K extends keyof ApiConfiguration, E>(
@@ -122,18 +123,19 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 				</div>
 			</div>
 			<Checkbox
-				checked={!!apiConfiguration?.awsBedrockEndpoint || false}
+				checked={awsEndpointSelected}
 				onChange={(e) => {
 					const isChecked = (e as any).target.checked
+					setAwsEndpointSelected(isChecked)
 					if (!isChecked) {
 						setApiConfigurationField("awsBedrockEndpoint", "")
 					}
 				}}>
 				Use custom VPC endpoint
 			</Checkbox>
-			{apiConfiguration?.awsBedrockEndpoint !== undefined && apiConfiguration?.awsBedrockEndpoint !== null && (
+			{awsEndpointSelected && (
 				<VSCodeTextField
-					value={apiConfiguration?.awsBedrockEndpoint}
+					value={apiConfiguration?.awsBedrockEndpoint || ""}
 					style={{ width: "100%", marginTop: 3, marginBottom: 5 }}
 					type="url"
 					onInput={handleInputChange("awsBedrockEndpoint")}
