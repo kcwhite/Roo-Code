@@ -131,15 +131,16 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 				}}>
 				{t("settings:providers.useCustomVpcEndpoint") || "Use custom VPC endpoint"}
 			</Checkbox>
-			{apiConfiguration?.awsBedrockEndpoint !== undefined && apiConfiguration?.awsBedrockEndpoint !== "" ? (
+			{!!apiConfiguration?.awsBedrockEndpoint && (
 				<VSCodeTextField
 					value={apiConfiguration?.awsBedrockEndpoint || ""}
+					style={{ width: "100%", marginTop: 3, marginBottom: 5 }}
+					type="url"
 					onInput={handleInputChange("awsBedrockEndpoint")}
-					placeholder="https://bedrock-runtime.us-east-1.amazonaws.com"
-					className="w-full ml-6">
-					<label className="block font-medium mb-1">{t("settings:providers.vpcEndpointUrl") || "VPC Endpoint URL"}</label>
-				</VSCodeTextField>
-			) : null}
+					placeholder="Enter VPC Endpoint URL (optional)"
+					className="ml-6"
+				/>
+			)}
 		</>
 	)
 }
