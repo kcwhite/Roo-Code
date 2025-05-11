@@ -122,18 +122,18 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 				</div>
 			</div>
 			<Checkbox
-				checked={!!apiConfiguration?.awsBedrockEndpoint}
+				checked={!!apiConfiguration?.awsBedrockEndpoint || false}
 				onChange={(e) => {
-					const isChecked = (e as any).target.checked;
+					const isChecked = (e as any).target.checked
 					if (!isChecked) {
-						setApiConfigurationField("awsBedrockEndpoint", "");
+						setApiConfigurationField("awsBedrockEndpoint", "")
 					}
 				}}>
-				{t("settings:providers.useCustomVpcEndpoint") || "Use custom VPC endpoint"}
+				Use custom VPC endpoint
 			</Checkbox>
-			{!!apiConfiguration?.awsBedrockEndpoint && (
+			{apiConfiguration?.awsBedrockEndpoint !== undefined && apiConfiguration?.awsBedrockEndpoint !== null && (
 				<VSCodeTextField
-					value={apiConfiguration?.awsBedrockEndpoint || ""}
+					value={apiConfiguration?.awsBedrockEndpoint}
 					style={{ width: "100%", marginTop: 3, marginBottom: 5 }}
 					type="url"
 					onInput={handleInputChange("awsBedrockEndpoint")}
