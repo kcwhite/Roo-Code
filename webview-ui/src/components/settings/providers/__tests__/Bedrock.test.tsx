@@ -20,18 +20,31 @@ jest.mock("vscrui", () => ({
 
 // Mock the VSCodeTextField component
 jest.mock("@vscode/webview-ui-toolkit/react", () => ({
-	VSCodeTextField: ({ children, value, onInput, placeholder, className, style }: any) => (
-		<div data-testid="vscode-text-field" className={className} style={style}>
-			{children}
-			<input
-				type="text"
-				value={value}
-				onChange={(e) => onInput && onInput(e)}
-				placeholder={placeholder}
-				data-testid="vpc-endpoint-input"
-			/>
-		</div>
-	),
+	VSCodeTextField: ({ children, value, onInput, placeholder, className, style }: any) => {
+		// Special case for VPC endpoint field
+		if (placeholder === "Enter VPC Endpoint URL (optional)") {
+			return (
+				<div data-testid="vpc-endpoint-text-field" className={className} style={style}>
+					{children}
+					<input
+						type="text"
+						value={value}
+						onChange={(e) => onInput && onInput(e)}
+						placeholder={placeholder}
+						data-testid="vpc-endpoint-input"
+					/>
+				</div>
+			)
+		}
+
+		// Regular text fields
+		return (
+			<div data-testid="vscode-text-field" className={className} style={style}>
+				{children}
+				<input type="text" value={value} onChange={(e) => onInput && onInput(e)} placeholder={placeholder} />
+			</div>
+		)
+	},
 	VSCodeRadio: () => <div>Radio</div>,
 	VSCodeRadioGroup: ({ children }: any) => <div>{children}</div>,
 }))
@@ -68,6 +81,7 @@ describe("Bedrock Component", () => {
 		// Initial render with checkbox unchecked
 		const apiConfiguration: Partial<ApiConfiguration> = {
 			awsBedrockEndpoint: "",
+			awsUseProfile: true, // Use profile to avoid rendering other text fields
 		}
 
 		render(
@@ -91,6 +105,7 @@ describe("Bedrock Component", () => {
 		// Initial render with checkbox checked
 		const apiConfiguration: Partial<ApiConfiguration> = {
 			awsBedrockEndpoint: "https://example.com",
+			awsUseProfile: true, // Use profile to avoid rendering other text fields
 		}
 
 		render(
