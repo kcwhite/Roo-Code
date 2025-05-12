@@ -124,8 +124,7 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 			</div>
 			<Checkbox
 				checked={awsEndpointSelected}
-				onChange={(e) => {
-					const isChecked = (e as any).target.checked
+				onChange={(isChecked) => {
 					setAwsEndpointSelected(isChecked)
 					if (!isChecked) {
 						setApiConfigurationField("awsBedrockEndpoint", "")
