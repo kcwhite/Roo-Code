@@ -372,6 +372,7 @@ export const providerSettingsSchema = z.object({
 	awsUseProfile: z.boolean().optional(),
 	awsCustomArn: z.string().optional(),
 	awsBedrockEndpoint: z.string().optional(),
+	awsBedrockEndpointEnabled: z.boolean().optional(),
 	// Google Vertex
 	vertexKeyFile: z.string().optional(),
 	vertexJsonCredentials: z.string().optional(),
@@ -481,6 +482,7 @@ const providerSettingsRecord: ProviderSettingsRecord = {
 	awsUseProfile: undefined,
 	awsCustomArn: undefined,
 	awsBedrockEndpoint: undefined,
+	awsBedrockEndpointEnabled: undefined,
 	// Google Vertex
 	vertexKeyFile: undefined,
 	vertexJsonCredentials: undefined,
