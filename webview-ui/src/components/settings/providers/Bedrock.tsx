@@ -139,7 +139,6 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 					type="url"
 					onInput={handleInputChange("awsBedrockEndpoint")}
 					placeholder="Enter VPC Endpoint URL (optional)"
-					className="ml-6"
 				/>
 			)}
 		</>
