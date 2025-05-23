@@ -466,6 +466,8 @@ const bedrockSchema = apiModelIdProviderModelSchema.extend({
 	awsProfile: z.string().optional(),
 	awsUseProfile: z.boolean().optional(),
 	awsCustomArn: z.string().optional(),
+	awsBedrockEndpoint: z.string().optional(),
+	awsBedrockEndpointEnabled: z.boolean().optional(),
 })
 
 const vertexSchema = apiModelIdProviderModelSchema.extend({
@@ -651,6 +653,8 @@ const providerSettingsRecord: ProviderSettingsRecord = {
 	awsProfile: undefined,
 	awsUseProfile: undefined,
 	awsCustomArn: undefined,
+	awsBedrockEndpoint: undefined,
+	awsBedrockEndpointEnabled: undefined,
 	// Google Vertex
 	vertexKeyFile: undefined,
 	vertexJsonCredentials: undefined,
