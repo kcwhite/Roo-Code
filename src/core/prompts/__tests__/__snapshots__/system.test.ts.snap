@@ -7,7 +7,7 @@ exports[`SYSTEM_PROMPT should exclude diff strategy tool description when diffEn
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -341,10 +341,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -480,7 +480,7 @@ exports[`SYSTEM_PROMPT should exclude diff strategy tool description when diffEn
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -814,10 +814,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -953,7 +953,7 @@ exports[`SYSTEM_PROMPT should explicitly handle undefined mcpHub 1`] = `
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -1287,10 +1287,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -1426,7 +1426,7 @@ exports[`SYSTEM_PROMPT should handle different browser viewport sizes 1`] = `
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -1813,10 +1813,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -1955,7 +1955,7 @@ exports[`SYSTEM_PROMPT should include MCP server info when mcpHub is provided 1`
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -2338,10 +2338,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -2496,7 +2496,7 @@ exports[`SYSTEM_PROMPT should include browser actions when supportsComputerUse i
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -2883,10 +2883,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -3025,7 +3025,7 @@ exports[`SYSTEM_PROMPT should include diff strategy tool description when diffEn
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -3449,10 +3449,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -3588,7 +3588,7 @@ exports[`SYSTEM_PROMPT should maintain consistent system prompt 1`] = `
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -3922,10 +3922,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -4103,7 +4103,7 @@ exports[`addCustomInstructions should exclude MCP server creation info when disa
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -4486,10 +4486,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -4653,7 +4653,7 @@ exports[`addCustomInstructions should generate correct prompt for architect mode
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -4965,10 +4965,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -5117,7 +5117,7 @@ exports[`addCustomInstructions should generate correct prompt for ask mode 1`] =
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -5326,10 +5326,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:
@@ -5452,7 +5452,7 @@ Language Preference:
 You should always speak and think in the "en" language.
 
 Mode-specific Instructions:
-You can analyze code, explain concepts, and access external resources. Make sure to answer the user's questions and don't rush to switch to implementing code. Include Mermaid diagrams if they help make your response clearer.
+You can analyze code, explain concepts, and access external resources. Always answer the user’s questions thoroughly, and do not switch to implementing code unless explicitly requested by the user. Include Mermaid diagrams when they clarify your response.
 
 Rules:
 # Rules from .clinerules-ask:
@@ -5498,7 +5498,7 @@ exports[`addCustomInstructions should include MCP server creation info when enab
 
 MARKDOWN RULES
 
-ALL responses MUST show ANY \`language construct\` OR filename reterence as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
+ALL responses MUST show ANY \`language construct\` OR filename reference as clickable, exactly as [\`filename OR language.declaration()\`](relative/file/path.ext:line); line is required for \`syntax\` and optional for filename links. This applies to ALL markdown responses and ALSO those in <attempt_completion>
 
 ====
 
@@ -5881,10 +5881,10 @@ Example: Requesting to switch to code mode
 </switch_mode>
 
 ## new_task
-Description: Create a new task with a specified starting mode and initial message. This tool instructs the system to create a new Cline instance in the given mode with the provided message.
+Description: This will let you create a new task instance in the chosen mode using your provided message.
 
 Parameters:
-- mode: (required) The slug of the mode to start the new task in (e.g., "code", "ask", "architect").
+- mode: (required) The slug of the mode to start the new task in (e.g., "code", "debug", "architect").
 - message: (required) The initial user message or instructions for this new task.
 
 Usage:

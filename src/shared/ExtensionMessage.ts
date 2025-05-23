@@ -2,8 +2,8 @@ import { GitCommit } from "../utils/git"
 
 import {
 	GlobalSettings,
-	ApiConfigMeta,
-	ProviderSettings as ApiConfiguration,
+	ProviderSettingsEntry,
+	ProviderSettings,
 	HistoryItem,
 	ModeConfig,
 	TelemetrySetting,
@@ -17,7 +17,7 @@ import { McpServer } from "./mcp"
 import { Mode } from "./modes"
 import { RouterModels } from "./api"
 
-export type { ApiConfigMeta, ToolProgressStatus }
+export type { ProviderSettingsEntry, ToolProgressStatus }
 
 export interface LanguageModelChatSelector {
 	vendor?: string
@@ -69,6 +69,7 @@ export interface ExtensionMessage {
 		| "setHistoryPreviewCollapsed"
 		| "commandExecutionStatus"
 		| "vsCodeSetting"
+		| "condenseTaskContextResponse"
 	text?: string
 	action?:
 		| "chatButtonClicked"
@@ -95,7 +96,7 @@ export interface ExtensionMessage {
 	vsCodeLmModels?: { vendor?: string; family?: string; version?: string; id?: string }[]
 	mcpServers?: McpServer[]
 	commits?: GitCommit[]
-	listApiConfig?: ApiConfigMeta[]
+	listApiConfig?: ProviderSettingsEntry[]
 	mode?: Mode
 	customMode?: ModeConfig
 	slug?: string
@@ -131,6 +132,7 @@ export type ExtensionState = Pick<
 	| "alwaysAllowSubtasks"
 	| "alwaysAllowExecute"
 	| "allowedCommands"
+	| "allowedMaxRequests"
 	| "browserToolEnabled"
 	| "browserViewportSize"
 	| "screenshotQuality"
@@ -168,11 +170,13 @@ export type ExtensionState = Pick<
 	| "customModePrompts"
 	| "customSupportPrompts"
 	| "enhancementApiConfigId"
+	| "condensingApiConfigId"
+	| "customCondensingPrompt"
 > & {
 	version: string
 	clineMessages: ClineMessage[]
 	currentTaskItem?: HistoryItem
-	apiConfiguration?: ApiConfiguration
+	apiConfiguration?: ProviderSettings
 	uriScheme?: string
 	shouldShowAnnouncement: boolean
 
@@ -204,6 +208,7 @@ export type ExtensionState = Pick<
 	renderContext: "sidebar" | "editor"
 	settingsImportedAt?: number
 	historyPreviewCollapsed?: boolean
+	autoCondenseContextPercent: number
 }
 
 export type { ClineMessage, ClineAsk, ClineSay }

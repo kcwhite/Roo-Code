@@ -5,6 +5,7 @@ export type { ExperimentId }
 
 export const EXPERIMENT_IDS = {
 	POWER_STEERING: "powerSteering",
+	AUTO_CONDENSE_CONTEXT: "autoCondenseContext",
 } as const satisfies Record<string, ExperimentId>
 
 type _AssertExperimentIds = AssertEqual<Equals<ExperimentId, Values<typeof EXPERIMENT_IDS>>>
@@ -17,6 +18,7 @@ interface ExperimentConfig {
 
 export const experimentConfigsMap: Record<ExperimentKey, ExperimentConfig> = {
 	POWER_STEERING: { enabled: false },
+	AUTO_CONDENSE_CONTEXT: { enabled: false }, // Keep this last, there is a slider below it in the UI
 }
 
 export const experimentDefault = Object.fromEntries(

@@ -1,16 +1,62 @@
 import { ModelInfo, ProviderName, ProviderSettings } from "../schemas"
 
-export type { ModelInfo, ProviderName }
+export type { ModelInfo, ProviderName, ProviderSettings }
 
 export type ApiHandlerOptions = Omit<ProviderSettings, "apiProvider" | "id">
-
-export type ApiConfiguration = ProviderSettings
 
 // Anthropic
 // https://docs.anthropic.com/en/docs/about-claude/models
 export type AnthropicModelId = keyof typeof anthropicModels
 export const anthropicDefaultModelId: AnthropicModelId = "claude-3-7-sonnet-20250219"
 export const anthropicModels = {
+	"claude-sonnet-4-20250514:thinking": {
+		maxTokens: 64_000,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0, // $3 per million input tokens
+		outputPrice: 15.0, // $15 per million output tokens
+		cacheWritesPrice: 3.75, // $3.75 per million tokens
+		cacheReadsPrice: 0.3, // $0.30 per million tokens
+		thinking: true,
+	},
+	"claude-sonnet-4-20250514": {
+		maxTokens: 8192,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0, // $3 per million input tokens
+		outputPrice: 15.0, // $15 per million output tokens
+		cacheWritesPrice: 3.75, // $3.75 per million tokens
+		cacheReadsPrice: 0.3, // $0.30 per million tokens
+		thinking: false,
+	},
+	"claude-opus-4-20250514:thinking": {
+		maxTokens: 64_000,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 15.0, // $15 per million input tokens
+		outputPrice: 75.0, // $75 per million output tokens
+		cacheWritesPrice: 18.75, // $18.75 per million tokens
+		cacheReadsPrice: 1.5, // $1.50 per million tokens
+		thinking: true,
+	},
+	"claude-opus-4-20250514": {
+		maxTokens: 8192,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 15.0, // $15 per million input tokens
+		outputPrice: 75.0, // $75 per million output tokens
+		cacheWritesPrice: 18.75, // $18.75 per million tokens
+		cacheReadsPrice: 1.5, // $1.50 per million tokens
+		thinking: false,
+	},
 	"claude-3-7-sonnet-20250219:thinking": {
 		maxTokens: 128_000,
 		contextWindow: 200_000,
@@ -161,6 +207,34 @@ export const bedrockModels = {
 		minTokensPerCachePoint: 1,
 		maxCachePoints: 1,
 		cachableFields: ["system"],
+	},
+	"anthropic.claude-sonnet-4-20250514-v1:0": {
+		maxTokens: 8192,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0,
+		outputPrice: 15.0,
+		cacheWritesPrice: 3.75,
+		cacheReadsPrice: 0.3,
+		minTokensPerCachePoint: 1024,
+		maxCachePoints: 4,
+		cachableFields: ["system", "messages", "tools"],
+	},
+	"anthropic.claude-opus-4-20250514-v1:0": {
+		maxTokens: 8192,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 15.0,
+		outputPrice: 75.0,
+		cacheWritesPrice: 18.75,
+		cacheReadsPrice: 1.5,
+		minTokensPerCachePoint: 1024,
+		maxCachePoints: 4,
+		cachableFields: ["system", "messages", "tools"],
 	},
 	"anthropic.claude-3-7-sonnet-20250219-v1:0": {
 		maxTokens: 8192,
@@ -474,6 +548,25 @@ export const openRouterDefaultModelInfo: ModelInfo = {
 export type VertexModelId = keyof typeof vertexModels
 export const vertexDefaultModelId: VertexModelId = "claude-3-7-sonnet@20250219"
 export const vertexModels = {
+	"gemini-2.5-flash-preview-05-20:thinking": {
+		maxTokens: 65_535,
+		contextWindow: 1_048_576,
+		supportsImages: true,
+		supportsPromptCache: false,
+		inputPrice: 0.15,
+		outputPrice: 3.5,
+		thinking: true,
+		maxThinkingTokens: 24_576,
+	},
+	"gemini-2.5-flash-preview-05-20": {
+		maxTokens: 65_535,
+		contextWindow: 1_048_576,
+		supportsImages: true,
+		supportsPromptCache: false,
+		inputPrice: 0.15,
+		outputPrice: 0.6,
+		thinking: false,
+	},
 	"gemini-2.5-flash-preview-04-17:thinking": {
 		maxTokens: 65_535,
 		contextWindow: 1_048_576,
@@ -498,7 +591,6 @@ export const vertexModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 2.5,
 		outputPrice: 15,
 	},
@@ -507,7 +599,6 @@ export const vertexModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 2.5,
 		outputPrice: 15,
 	},
@@ -532,7 +623,6 @@ export const vertexModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 0.15,
 		outputPrice: 0.6,
 	},
@@ -557,7 +647,6 @@ export const vertexModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 0.075,
 		outputPrice: 0.3,
 	},
@@ -568,6 +657,54 @@ export const vertexModels = {
 		supportsPromptCache: false,
 		inputPrice: 1.25,
 		outputPrice: 5,
+	},
+	"claude-sonnet-4@20250514:thinking": {
+		maxTokens: 64_000,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0,
+		outputPrice: 15.0,
+		cacheWritesPrice: 3.75,
+		cacheReadsPrice: 0.3,
+		thinking: true,
+	},
+	"claude-sonnet-4@20250514": {
+		maxTokens: 8192,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 3.0,
+		outputPrice: 15.0,
+		cacheWritesPrice: 3.75,
+		cacheReadsPrice: 0.3,
+		thinking: false,
+	},
+	"claude-opus-4@20250514:thinking": {
+		maxTokens: 64_000,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 15.0,
+		outputPrice: 75.0,
+		cacheWritesPrice: 18.75,
+		cacheReadsPrice: 1.5,
+		thinking: true,
+	},
+	"claude-opus-4@20250514": {
+		maxTokens: 8192,
+		contextWindow: 200_000,
+		supportsImages: true,
+		supportsComputerUse: true,
+		supportsPromptCache: true,
+		inputPrice: 15.0,
+		outputPrice: 75.0,
+		cacheWritesPrice: 18.75,
+		cacheReadsPrice: 1.5,
+		thinking: false,
 	},
 	"claude-3-7-sonnet@20250219:thinking": {
 		maxTokens: 64_000,
@@ -679,6 +816,25 @@ export const geminiModels = {
 		outputPrice: 0.6,
 		thinking: false,
 	},
+	"gemini-2.5-flash-preview-05-20:thinking": {
+		maxTokens: 65_535,
+		contextWindow: 1_048_576,
+		supportsImages: true,
+		supportsPromptCache: false,
+		inputPrice: 0.15,
+		outputPrice: 3.5,
+		thinking: true,
+		maxThinkingTokens: 24_576,
+	},
+	"gemini-2.5-flash-preview-05-20": {
+		maxTokens: 65_535,
+		contextWindow: 1_048_576,
+		supportsImages: true,
+		supportsPromptCache: false,
+		inputPrice: 0.15,
+		outputPrice: 0.6,
+		thinking: false,
+	},
 	"gemini-2.5-pro-exp-03-25": {
 		maxTokens: 65_535,
 		contextWindow: 1_048_576,
@@ -692,7 +848,6 @@ export const geminiModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 2.5, // This is the pricing for prompts above 200k tokens.
 		outputPrice: 15,
 		cacheReadsPrice: 0.625,
@@ -717,7 +872,6 @@ export const geminiModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 2.5, // This is the pricing for prompts above 200k tokens.
 		outputPrice: 15,
 		cacheReadsPrice: 0.625,
@@ -742,7 +896,6 @@ export const geminiModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 0.1,
 		outputPrice: 0.4,
 		cacheReadsPrice: 0.025,
@@ -793,7 +946,6 @@ export const geminiModels = {
 		contextWindow: 1_048_576,
 		supportsImages: true,
 		supportsPromptCache: true,
-		isPromptCacheOptional: true,
 		inputPrice: 0.15, // This is the pricing for prompts above 128k tokens.
 		outputPrice: 0.6,
 		cacheReadsPrice: 0.0375,
@@ -1543,6 +1695,11 @@ export type ChutesModelId =
 	| "deepseek-ai/DeepSeek-V3-Base"
 	| "deepseek-ai/DeepSeek-R1-Zero"
 	| "deepseek-ai/DeepSeek-V3-0324"
+	| "Qwen/Qwen3-235B-A22B"
+	| "Qwen/Qwen3-32B"
+	| "Qwen/Qwen3-30B-A3B"
+	| "Qwen/Qwen3-14B"
+	| "Qwen/Qwen3-8B"
 	| "microsoft/MAI-DS-R1-FP8"
 	| "tngtech/DeepSeek-R1T-Chimera"
 export const chutesDefaultModelId: ChutesModelId = "deepseek-ai/DeepSeek-R1"
@@ -1673,6 +1830,51 @@ export const chutesModels = {
 		outputPrice: 0,
 		description: "DeepSeek V3 (0324) model.",
 	},
+	"Qwen/Qwen3-235B-A22B": {
+		maxTokens: 32768,
+		contextWindow: 40960,
+		supportsImages: false,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Qwen3 235B A22B model.",
+	},
+	"Qwen/Qwen3-32B": {
+		maxTokens: 32768,
+		contextWindow: 40960,
+		supportsImages: false,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Qwen3 32B model.",
+	},
+	"Qwen/Qwen3-30B-A3B": {
+		maxTokens: 32768,
+		contextWindow: 40960,
+		supportsImages: false,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Qwen3 30B A3B model.",
+	},
+	"Qwen/Qwen3-14B": {
+		maxTokens: 32768,
+		contextWindow: 40960,
+		supportsImages: false,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Qwen3 14B model.",
+	},
+	"Qwen/Qwen3-8B": {
+		maxTokens: 32768,
+		contextWindow: 40960,
+		supportsImages: false,
+		supportsPromptCache: false,
+		inputPrice: 0,
+		outputPrice: 0,
+		description: "Qwen3 8B model.",
+	},
 	"microsoft/MAI-DS-R1-FP8": {
 		maxTokens: 32768,
 		contextWindow: 163840,
@@ -1719,18 +1921,15 @@ export const PROMPT_CACHING_MODELS = new Set([
 	"anthropic/claude-3.7-sonnet",
 	"anthropic/claude-3.7-sonnet:beta",
 	"anthropic/claude-3.7-sonnet:thinking",
-	"google/gemini-2.5-pro-preview-03-25",
-	"google/gemini-2.5-pro-preview-05-06",
-	"google/gemini-2.0-flash-001",
-	"google/gemini-flash-1.5",
-	"google/gemini-flash-1.5-8b",
-])
-
-// These models don't have prompt caching enabled by default (you can turn it on
-// in settings).
-export const OPTIONAL_PROMPT_CACHING_MODELS = new Set([
-	"google/gemini-2.5-pro-preview-03-25",
-	"google/gemini-2.5-pro-preview-05-06",
+	"anthropic/claude-sonnet-4",
+	"anthropic/claude-sonnet-4:thinking",
+	"anthropic/claude-opus-4",
+	"anthropic/claude-opus-4:thinking",
+	"google/gemini-2.5-pro-preview",
+	"google/gemini-2.5-flash-preview",
+	"google/gemini-2.5-flash-preview:thinking",
+	"google/gemini-2.5-flash-preview-05-20",
+	"google/gemini-2.5-flash-preview-05-20:thinking",
 	"google/gemini-2.0-flash-001",
 	"google/gemini-flash-1.5",
 	"google/gemini-flash-1.5-8b",
@@ -1743,6 +1942,10 @@ export const COMPUTER_USE_MODELS = new Set([
 	"anthropic/claude-3.7-sonnet",
 	"anthropic/claude-3.7-sonnet:beta",
 	"anthropic/claude-3.7-sonnet:thinking",
+	"anthropic/claude-sonnet-4",
+	"anthropic/claude-sonnet-4:thinking",
+	"anthropic/claude-opus-4",
+	"anthropic/claude-opus-4:thinking",
 ])
 
 const routerNames = ["openrouter", "requesty", "glama", "unbound", "litellm"] as const

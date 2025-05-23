@@ -1,3 +1,5 @@
+/* eslint-disable no-irregular-whitespace */
+
 import { distance } from "fastest-levenshtein"
 
 import { addLineNumbers, everyLineHasLineNumbers, stripLineNumbers } from "../../../integrations/misc/extract-text"
@@ -379,6 +381,10 @@ Only use a single line of '=======' between search and replacement content, beca
 			const hasAllLineNumbers =
 				(everyLineHasLineNumbers(searchContent) && everyLineHasLineNumbers(replaceContent)) ||
 				(everyLineHasLineNumbers(searchContent) && replaceContent.trim() === "")
+
+			if (hasAllLineNumbers && startLine === 0) {
+				startLine = parseInt(searchContent.split("\n")[0].split("|")[0])
+			}
 
 			if (hasAllLineNumbers) {
 				searchContent = stripLineNumbers(searchContent)

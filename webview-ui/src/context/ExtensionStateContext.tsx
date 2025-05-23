@@ -1,9 +1,8 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react"
 import { useEvent } from "react-use"
-import { ApiConfigMeta, ExtensionMessage, ExtensionState } from "@roo/shared/ExtensionMessage"
-import { ApiConfiguration } from "@roo/shared/api"
-import { vscode } from "@src/utils/vscode"
-import { convertTextMateToHljs } from "@src/utils/textMateToHljs"
+
+import { ProviderSettingsEntry, ExtensionMessage, ExtensionState } from "@roo/shared/ExtensionMessage"
+import { ProviderSettings } from "@roo/shared/api"
 import { findLastIndex } from "@roo/shared/array"
 import { McpServer } from "@roo/shared/mcp"
 import { checkExistKey } from "@roo/shared/checkExistApiConfig"
@@ -11,6 +10,9 @@ import { Mode, CustomModePrompts, defaultModeSlug, defaultPrompts, ModeConfig } 
 import { CustomSupportPrompts } from "@roo/shared/support-prompt"
 import { experimentDefault, ExperimentId } from "@roo/shared/experiments"
 import { TelemetrySetting } from "@roo/shared/TelemetrySetting"
+
+import { vscode } from "@src/utils/vscode"
+import { convertTextMateToHljs } from "@src/utils/textMateToHljs"
 
 export interface ExtensionStateContextType extends ExtensionState {
 	historyPreviewCollapsed?: boolean // Add the new state property
@@ -22,7 +24,11 @@ export interface ExtensionStateContextType extends ExtensionState {
 	currentCheckpoint?: string
 	filePaths: string[]
 	openedTabs: Array<{ label: string; isActive: boolean; path?: string }>
-	setApiConfiguration: (config: ApiConfiguration) => void
+	condensingApiConfigId?: string
+	setCondensingApiConfigId: (value: string) => void
+	customCondensingPrompt?: string
+	setCustomCondensingPrompt: (value: string) => void
+	setApiConfiguration: (config: ProviderSettings) => void
 	setCustomInstructions: (value?: string) => void
 	setAlwaysAllowReadOnly: (value: boolean) => void
 	setAlwaysAllowReadOnlyOutsideWorkspace: (value: boolean) => void
@@ -37,6 +43,7 @@ export interface ExtensionStateContextType extends ExtensionState {
 	setShowRooIgnoredFiles: (value: boolean) => void
 	setShowAnnouncement: (value: boolean) => void
 	setAllowedCommands: (value: string[]) => void
+	setAllowedMaxRequests: (value: number | undefined) => void
 	setSoundEnabled: (value: boolean) => void
 	setSoundVolume: (value: number) => void
 	terminalShellIntegrationTimeout?: number
@@ -65,7 +72,7 @@ export interface ExtensionStateContextType extends ExtensionState {
 	requestDelaySeconds: number
 	setRequestDelaySeconds: (value: number) => void
 	setCurrentApiConfigName: (value: string) => void
-	setListApiConfigMeta: (value: ApiConfigMeta[]) => void
+	setListApiConfigMeta: (value: ProviderSettingsEntry[]) => void
 	mode: Mode
 	setMode: (value: Mode) => void
 	setCustomModePrompts: (value: CustomModePrompts) => void
@@ -93,6 +100,8 @@ export interface ExtensionStateContextType extends ExtensionState {
 	terminalCompressProgressBar?: boolean
 	setTerminalCompressProgressBar: (value: boolean) => void
 	setHistoryPreviewCollapsed: (value: boolean) => void
+	autoCondenseContextPercent: number
+	setAutoCondenseContextPercent: (value: number) => void
 }
 
 export const ExtensionStateContext = createContext<ExtensionStateContextType | undefined>(undefined)
@@ -131,6 +140,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		taskHistory: [],
 		shouldShowAnnouncement: false,
 		allowedCommands: [],
+		allowedMaxRequests: Infinity,
 		soundEnabled: false,
 		soundVolume: 0.5,
 		ttsEnabled: false,
@@ -155,6 +165,8 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		customSupportPrompts: {},
 		experiments: experimentDefault,
 		enhancementApiConfigId: "",
+		condensingApiConfigId: "", // Default empty string for condensing API config ID
+		customCondensingPrompt: "", // Default empty string for custom condensing prompt
 		autoApprovalEnabled: false,
 		customModes: [],
 		maxOpenTabsContext: 20,
@@ -171,6 +183,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		terminalZdotdir: false, // Default ZDOTDIR handling setting
 		terminalCompressProgressBar: true, // Default to compress progress bar output
 		historyPreviewCollapsed: false, // Initialize the new state (default to expanded)
+		autoCondenseContextPercent: 100,
 	})
 
 	const [didHydrateState, setDidHydrateState] = useState(false)
@@ -182,7 +195,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 	const [currentCheckpoint, setCurrentCheckpoint] = useState<string>()
 
 	const setListApiConfigMeta = useCallback(
-		(value: ApiConfigMeta[]) => setState((prevState) => ({ ...prevState, listApiConfigMeta: value })),
+		(value: ProviderSettingsEntry[]) => setState((prevState) => ({ ...prevState, listApiConfigMeta: value })),
 		[],
 	)
 
@@ -286,6 +299,7 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		setAlwaysAllowSubtasks: (value) => setState((prevState) => ({ ...prevState, alwaysAllowSubtasks: value })),
 		setShowAnnouncement: (value) => setState((prevState) => ({ ...prevState, shouldShowAnnouncement: value })),
 		setAllowedCommands: (value) => setState((prevState) => ({ ...prevState, allowedCommands: value })),
+		setAllowedMaxRequests: (value) => setState((prevState) => ({ ...prevState, allowedMaxRequests: value })),
 		setSoundEnabled: (value) => setState((prevState) => ({ ...prevState, soundEnabled: value })),
 		setSoundVolume: (value) => setState((prevState) => ({ ...prevState, soundVolume: value })),
 		setTtsEnabled: (value) => setState((prevState) => ({ ...prevState, ttsEnabled: value })),
@@ -346,6 +360,11 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 			}),
 		setHistoryPreviewCollapsed: (value) =>
 			setState((prevState) => ({ ...prevState, historyPreviewCollapsed: value })), // Implement the setter
+		setAutoCondenseContextPercent: (value) =>
+			setState((prevState) => ({ ...prevState, autoCondenseContextPercent: value })),
+		setCondensingApiConfigId: (value) => setState((prevState) => ({ ...prevState, condensingApiConfigId: value })),
+		setCustomCondensingPrompt: (value) =>
+			setState((prevState) => ({ ...prevState, customCondensingPrompt: value })),
 	}
 
 	return <ExtensionStateContext.Provider value={contextValue}>{children}</ExtensionStateContext.Provider>

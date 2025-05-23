@@ -135,13 +135,13 @@ export function getContextMenuOptions(
 					type: ContextMenuOptionType.Mode,
 					value: result.item.original.slug,
 					label: result.item.original.name,
-					description: result.item.original.roleDefinition.split("\n")[0],
+					description: (result.item.original.whenToUse || result.item.original.roleDefinition).split("\n")[0],
 				}))
 			: modes.map((mode) => ({
 					type: ContextMenuOptionType.Mode,
 					value: mode.slug,
 					label: mode.name,
-					description: mode.roleDefinition.split("\n")[0],
+					description: (mode.whenToUse || mode.roleDefinition).split("\n")[0],
 				}))
 
 		return matchingModes.length > 0 ? matchingModes : [{ type: ContextMenuOptionType.NoResults }]
@@ -255,7 +255,7 @@ export function getContextMenuOptions(
 	// Convert search results to queryItems format
 	const searchResultItems = dynamicSearchResults.map((result) => {
 		// Ensure paths start with / for consistency
-		let formattedPath = result.path.startsWith("/") ? result.path : `/${result.path}`
+		const formattedPath = result.path.startsWith("/") ? result.path : `/${result.path}`
 
 		// For display purposes, we don't escape spaces in the label or description
 		const displayPath = formattedPath

@@ -12,10 +12,13 @@ import { useCopyToClipboard } from "@src/utils/clipboard"
 import { useExtensionState } from "@src/context/ExtensionStateContext"
 import { findMatchingResourceOrTemplate } from "@src/utils/mcp"
 import { vscode } from "@src/utils/vscode"
+import { removeLeadingNonAlphanumeric } from "@src/utils/removeLeadingNonAlphanumeric"
+import { getLanguageFromPath } from "@src/utils/getLanguageFromPath"
 import { Button } from "@src/components/ui"
 
-import CodeAccordian, { removeLeadingNonAlphanumeric } from "../common/CodeAccordian"
-import CodeBlock, { CODE_BLOCK_BG_COLOR } from "../common/CodeBlock"
+import { ToolUseBlock, ToolUseBlockHeader } from "../common/ToolUseBlock"
+import CodeAccordian from "../common/CodeAccordian"
+import CodeBlock from "../common/CodeBlock"
 import MarkdownBlock from "../common/MarkdownBlock"
 import { ReasoningBlock } from "./ReasoningBlock"
 import Thumbnails from "../common/Thumbnails"
@@ -29,6 +32,8 @@ import { ProgressIndicator } from "./ProgressIndicator"
 import { Markdown } from "./Markdown"
 import { CommandExecution } from "./CommandExecution"
 import { CommandExecutionError } from "./CommandExecutionError"
+import { AutoApprovedRequestLimitWarning } from "./AutoApprovedRequestLimitWarning"
+import { CondensingContextRow, ContextCondenseRow } from "./ContextCondenseRow"
 
 interface ChatRowProps {
 	message: ClineMessage
@@ -41,6 +46,7 @@ interface ChatRowProps {
 	onSuggestionClick?: (answer: string, event?: React.MouseEvent) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ChatRowContentProps extends Omit<ChatRowProps, "onHeightChange"> {}
 
 const ChatRow = memo(
@@ -287,10 +293,11 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
+							path={tool.path}
+							code={tool.content ?? tool.diff}
+							language="diff"
 							progressStatus={message.progressStatus}
 							isLoading={message.partial}
-							diff={tool.diff!}
-							path={tool.path!}
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -312,10 +319,11 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
+							path={tool.path}
+							code={tool.diff}
+							language="diff"
 							progressStatus={message.progressStatus}
 							isLoading={message.partial}
-							diff={tool.diff!}
-							path={tool.path!}
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -333,10 +341,11 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
+							path={tool.path}
+							code={tool.diff}
+							language="diff"
 							progressStatus={message.progressStatus}
 							isLoading={message.partial}
-							diff={tool.diff!}
-							path={tool.path!}
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -350,9 +359,10 @@ export const ChatRowContent = ({
 							<span style={{ fontWeight: "bold" }}>{t("chat:fileOperations.wantsToCreate")}</span>
 						</div>
 						<CodeAccordian
+							path={tool.path}
+							code={tool.content}
+							language={getLanguageFromPath(tool.path || "") || "log"}
 							isLoading={message.partial}
-							code={tool.content!}
-							path={tool.path!}
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -371,47 +381,21 @@ export const ChatRowContent = ({
 									: t("chat:fileOperations.didRead")}
 							</span>
 						</div>
-						<div
-							style={{
-								borderRadius: 3,
-								backgroundColor: CODE_BLOCK_BG_COLOR,
-								overflow: "hidden",
-								border: "1px solid var(--vscode-editorGroup-border)",
-							}}>
-							<div
-								style={{
-									color: "var(--vscode-descriptionForeground)",
-									display: "flex",
-									alignItems: "center",
-									padding: "9px 10px",
-									cursor: "pointer",
-									userSelect: "none",
-									WebkitUserSelect: "none",
-									MozUserSelect: "none",
-									msUserSelect: "none",
-								}}
-								onClick={() => {
-									vscode.postMessage({ type: "openFile", text: tool.content })
-								}}>
+						<ToolUseBlock>
+							<ToolUseBlockHeader
+								onClick={() => vscode.postMessage({ type: "openFile", text: tool.content })}>
 								{tool.path?.startsWith(".") && <span>.</span>}
-								<span
-									style={{
-										whiteSpace: "nowrap",
-										overflow: "hidden",
-										textOverflow: "ellipsis",
-										marginRight: "8px",
-										direction: "rtl",
-										textAlign: "left",
-									}}>
+								<span className="whitespace-nowrap overflow-hidden text-ellipsis text-left mr-2 rtl">
 									{removeLeadingNonAlphanumeric(tool.path ?? "") + "\u200E"}
 									{tool.reason}
 								</span>
 								<div style={{ flexGrow: 1 }}></div>
 								<span
 									className={`codicon codicon-link-external`}
-									style={{ fontSize: 13.5, margin: "1px 0" }}></span>
-							</div>
-						</div>
+									style={{ fontSize: 13.5, margin: "1px 0" }}
+								/>
+							</ToolUseBlockHeader>
+						</ToolUseBlock>
 					</>
 				)
 			case "fetchInstructions":
@@ -422,8 +406,9 @@ export const ChatRowContent = ({
 							<span style={{ fontWeight: "bold" }}>{t("chat:instructions.wantsToFetch")}</span>
 						</div>
 						<CodeAccordian
+							code={tool.content}
+							language="markdown"
 							isLoading={message.partial}
-							code={tool.content!}
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -441,8 +426,8 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
-							code={tool.content!}
-							path={tool.path!}
+							path={tool.path}
+							code={tool.content}
 							language="shell-session"
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
@@ -461,9 +446,9 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
-							code={tool.content!}
-							path={tool.path!}
-							language="shell-session"
+							path={tool.path}
+							code={tool.content}
+							language="shellsession"
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -481,8 +466,9 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
-							code={tool.content!}
-							path={tool.path!}
+							path={tool.path}
+							code={tool.content}
+							language="markdown"
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -510,9 +496,9 @@ export const ChatRowContent = ({
 							</span>
 						</div>
 						<CodeAccordian
-							code={tool.content!}
 							path={tool.path! + (tool.filePattern ? `/(${tool.filePattern})` : "")}
-							language="log"
+							code={tool.content}
+							language="shellsession"
 							isExpanded={isExpanded}
 							onToggleExpand={onToggleExpand}
 						/>
@@ -732,7 +718,7 @@ export const ChatRowContent = ({
 											backgroundColor: "var(--vscode-editor-background)",
 											borderTop: "none",
 										}}>
-										<CodeBlock source={`${"```"}plaintext\n${message.text || ""}\n${"```"}`} />
+										<CodeBlock source={message.text || ""} language="xml" />
 									</div>
 								)}
 							</div>
@@ -881,13 +867,10 @@ export const ChatRowContent = ({
 				case "user_feedback_diff":
 					const tool = safeJsonParse<ClineSayTool>(message.text)
 					return (
-						<div
-							style={{
-								marginTop: -10,
-								width: "100%",
-							}}>
+						<div style={{ marginTop: -10, width: "100%" }}>
 							<CodeAccordian
-								diff={tool?.diff!}
+								code={tool?.diff}
+								language="diff"
 								isFeedback={true}
 								isExpanded={isExpanded}
 								onToggleExpand={onToggleExpand}
@@ -951,6 +934,11 @@ export const ChatRowContent = ({
 							checkpoint={message.checkpoint}
 						/>
 					)
+				case "condense_context":
+					if (message.partial) {
+						return <CondensingContextRow />
+					}
+					return message.contextCondense ? <ContextCondenseRow {...message.contextCondense} /> : null
 				default:
 					return (
 						<>
@@ -980,13 +968,12 @@ export const ChatRowContent = ({
 					)
 				case "command":
 					return (
-						<>
-							<div style={headerStyle}>
-								{icon}
-								{title}
-							</div>
-							<CommandExecution executionId={message.ts.toString()} text={message.text} />
-						</>
+						<CommandExecution
+							executionId={message.ts.toString()}
+							text={message.text}
+							icon={icon}
+							title={title}
+						/>
 					)
 				case "use_mcp_server":
 					const useMcpServer = safeJsonParse<ClineAskUseMcpServer>(message.text)
@@ -1109,6 +1096,9 @@ export const ChatRowContent = ({
 							/>
 						</>
 					)
+				case "auto_approval_max_req_reached": {
+					return <AutoApprovedRequestLimitWarning message={message} />
+				}
 				default:
 					return null
 			}
