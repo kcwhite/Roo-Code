@@ -86,7 +86,7 @@ describe("Bedrock Component", () => {
 
 		render(
 			<Bedrock
-				apiConfiguration={apiConfiguration as ApiConfiguration}
+				apiConfiguration={apiConfiguration as ProviderSettings}
 				setApiConfigurationField={mockSetApiConfigurationField}
 			/>,
 		)
@@ -111,7 +111,7 @@ describe("Bedrock Component", () => {
 
 		render(
 			<Bedrock
-				apiConfiguration={apiConfiguration as ApiConfiguration}
+				apiConfiguration={apiConfiguration as ProviderSettings}
 				setApiConfigurationField={mockSetApiConfigurationField}
 			/>,
 		)
@@ -132,7 +132,7 @@ describe("Bedrock Component", () => {
 	// Test Scenario 1: Input Validation Test
 	describe("Input Validation", () => {
 		it("should accept valid URL formats", () => {
-			const apiConfiguration: Partial<ApiConfiguration> = {
+			const apiConfiguration: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "",
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -140,7 +140,7 @@ describe("Bedrock Component", () => {
 
 			render(
 				<Bedrock
-					apiConfiguration={apiConfiguration as ApiConfiguration}
+					apiConfiguration={apiConfiguration as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -160,7 +160,7 @@ describe("Bedrock Component", () => {
 		})
 
 		it("should handle empty URL input", () => {
-			const apiConfiguration: Partial<ApiConfiguration> = {
+			const apiConfiguration: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "https://example.com",
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -168,7 +168,7 @@ describe("Bedrock Component", () => {
 
 			render(
 				<Bedrock
-					apiConfiguration={apiConfiguration as ApiConfiguration}
+					apiConfiguration={apiConfiguration as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -187,7 +187,7 @@ describe("Bedrock Component", () => {
 	// Test Scenario 2: Edge Case Tests
 	describe("Edge Cases", () => {
 		it("should preserve endpoint URL when toggling checkbox multiple times", () => {
-			const apiConfiguration: Partial<ApiConfiguration> = {
+			const apiConfiguration: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "https://bedrock-vpc.example.com",
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -195,7 +195,7 @@ describe("Bedrock Component", () => {
 
 			render(
 				<Bedrock
-					apiConfiguration={apiConfiguration as ApiConfiguration}
+					apiConfiguration={apiConfiguration as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -224,7 +224,7 @@ describe("Bedrock Component", () => {
 			const veryLongUrl =
 				"https://bedrock-vpc-endpoint-with-a-very-long-name-that-might-cause-issues-in-some-ui-components.region-1.amazonaws.com/api/v1/endpoint"
 
-			const apiConfiguration: Partial<ApiConfiguration> = {
+			const apiConfiguration: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: veryLongUrl,
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -232,7 +232,7 @@ describe("Bedrock Component", () => {
 
 			render(
 				<Bedrock
-					apiConfiguration={apiConfiguration as ApiConfiguration}
+					apiConfiguration={apiConfiguration as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -253,7 +253,7 @@ describe("Bedrock Component", () => {
 	// Test Scenario 4: Error Handling Tests
 	describe("Error Handling", () => {
 		it("should handle invalid endpoint URLs gracefully", () => {
-			const apiConfiguration: Partial<ApiConfiguration> = {
+			const apiConfiguration: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "",
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -261,7 +261,7 @@ describe("Bedrock Component", () => {
 
 			render(
 				<Bedrock
-					apiConfiguration={apiConfiguration as ApiConfiguration}
+					apiConfiguration={apiConfiguration as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -282,7 +282,7 @@ describe("Bedrock Component", () => {
 	describe("Persistence", () => {
 		it("should initialize with the correct state from apiConfiguration", () => {
 			// Test with endpoint enabled
-			const apiConfigurationEnabled: Partial<ApiConfiguration> = {
+			const apiConfigurationEnabled: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "https://custom-endpoint.aws.com",
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -290,7 +290,7 @@ describe("Bedrock Component", () => {
 
 			const { unmount } = render(
 				<Bedrock
-					apiConfiguration={apiConfigurationEnabled as ApiConfiguration}
+					apiConfiguration={apiConfigurationEnabled as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -303,7 +303,7 @@ describe("Bedrock Component", () => {
 			unmount()
 
 			// Test with endpoint disabled
-			const apiConfigurationDisabled: Partial<ApiConfiguration> = {
+			const apiConfigurationDisabled: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "https://custom-endpoint.aws.com",
 				awsBedrockEndpointEnabled: false,
 				awsUseProfile: true,
@@ -311,7 +311,7 @@ describe("Bedrock Component", () => {
 
 			render(
 				<Bedrock
-					apiConfiguration={apiConfigurationDisabled as ApiConfiguration}
+					apiConfiguration={apiConfigurationDisabled as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -323,7 +323,7 @@ describe("Bedrock Component", () => {
 
 		it("should update state when apiConfiguration changes", () => {
 			// Initial render with endpoint disabled
-			const apiConfigurationInitial: Partial<ApiConfiguration> = {
+			const apiConfigurationInitial: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "https://initial-endpoint.aws.com",
 				awsBedrockEndpointEnabled: false,
 				awsUseProfile: true,
@@ -331,7 +331,7 @@ describe("Bedrock Component", () => {
 
 			const { rerender } = render(
 				<Bedrock
-					apiConfiguration={apiConfigurationInitial as ApiConfiguration}
+					apiConfiguration={apiConfigurationInitial as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
@@ -341,7 +341,7 @@ describe("Bedrock Component", () => {
 			expect(screen.queryByTestId("vpc-endpoint-input")).not.toBeInTheDocument()
 
 			// Update with new configuration
-			const apiConfigurationUpdated: Partial<ApiConfiguration> = {
+			const apiConfigurationUpdated: Partial<ProviderSettings> = {
 				awsBedrockEndpoint: "https://updated-endpoint.aws.com",
 				awsBedrockEndpointEnabled: true,
 				awsUseProfile: true,
@@ -349,7 +349,7 @@ describe("Bedrock Component", () => {
 
 			rerender(
 				<Bedrock
-					apiConfiguration={apiConfigurationUpdated as ApiConfiguration}
+					apiConfiguration={apiConfigurationUpdated as ProviderSettings}
 					setApiConfigurationField={mockSetApiConfigurationField}
 				/>,
 			)
