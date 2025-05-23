@@ -660,6 +660,8 @@ type IpcMessage =
 								awsProfile?: string | undefined
 								awsUseProfile?: boolean | undefined
 								awsCustomArn?: string | undefined
+								awsBedrockEndpoint?: string | undefined
+								awsBedrockEndpointEnabled?: boolean | undefined
 								vertexKeyFile?: string | undefined
 								vertexJsonCredentials?: string | undefined
 								vertexProjectId?: string | undefined
@@ -1137,6 +1139,8 @@ type TaskCommand =
 					awsProfile?: string | undefined
 					awsUseProfile?: boolean | undefined
 					awsCustomArn?: string | undefined
+					awsBedrockEndpoint?: string | undefined
+					awsBedrockEndpointEnabled?: boolean | undefined
 					vertexKeyFile?: string | undefined
 					vertexJsonCredentials?: string | undefined
 					vertexProjectId?: string | undefined

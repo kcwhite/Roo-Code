@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { Bedrock } from "../Bedrock"
-import { ApiConfiguration } from "@roo/shared/api"
+import { ProviderSettings } from "@roo/shared/api"
 
 // Mock the vscrui Checkbox component
 jest.mock("vscrui", () => ({
@@ -79,7 +79,7 @@ describe("Bedrock Component", () => {
 
 	it("should show text field when VPC endpoint checkbox is checked", () => {
 		// Initial render with checkbox unchecked
-		const apiConfiguration: Partial<ApiConfiguration> = {
+		const apiConfiguration: Partial<ProviderSettings> = {
 			awsBedrockEndpoint: "",
 			awsUseProfile: true, // Use profile to avoid rendering other text fields
 		}
@@ -103,7 +103,7 @@ describe("Bedrock Component", () => {
 
 	it("should hide text field when VPC endpoint checkbox is unchecked", () => {
 		// Initial render with checkbox checked
-		const apiConfiguration: Partial<ApiConfiguration> = {
+		const apiConfiguration: Partial<ProviderSettings> = {
 			awsBedrockEndpoint: "https://example.com",
 			awsBedrockEndpointEnabled: true, // Need to explicitly set this to true
 			awsUseProfile: true, // Use profile to avoid rendering other text fields
