@@ -2,4 +2,4 @@
 "roo-cline": patch
 ---
 
-Fix OpenRouter names
+Fix o1-pro on OpenRouter
