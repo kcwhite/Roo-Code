@@ -20,9 +20,9 @@ jest.mock("vscrui", () => ({
 
 // Mock the VSCodeTextField component
 jest.mock("@vscode/webview-ui-toolkit/react", () => ({
-	VSCodeTextField: ({ children, value, onInput, placeholder, className, style }: any) => {
-		// Special case for VPC endpoint field
-		if (placeholder === "Enter VPC Endpoint URL (optional)") {
+	VSCodeTextField: ({ children, value, onInput, placeholder, className, style, "data-testid": dataTestId }: any) => {
+		// Special case for VPC endpoint field with data-testid
+		if (dataTestId === "vpc-endpoint-input") {
 			return (
 				<div data-testid="vpc-endpoint-text-field" className={className} style={style}>
 					{children}
