@@ -141,7 +141,7 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 					style={{ width: "100%", marginTop: 3, marginBottom: 5 }}
 					type="url"
 					onInput={handleInputChange("awsBedrockEndpoint")}
-					placeholder="Enter VPC Endpoint URL (optional)"
+					placeholder="https://vpce-xxx.bedrock.region.vpce.amazonaws.com/"
 				/>
 			)}
 		</>
