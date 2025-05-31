@@ -6,12 +6,12 @@ import { ProviderSettings } from "@roo-code/types"
 // Mock the vscrui Checkbox component
 jest.mock("vscrui", () => ({
 	Checkbox: ({ children, checked, onChange }: any) => (
-		<label data-testid={`checkbox-${children?.toString().replace(/\s+/g, "-").toLowerCase()}`}>
+		<label data-testid={`checkbox-${children?.toString().replace(/\\s+/g, "-").toLowerCase()}`}>
 			<input
 				type="checkbox"
 				checked={checked}
 				onChange={() => onChange(!checked)} // Toggle the checked state
-				data-testid={`checkbox-input-${children?.toString().replace(/\s+/g, "-").toLowerCase()}`}
+				data-testid={`checkbox-input-${children?.toString().replace(/\\s+/g, "-").toLowerCase()}`}
 			/>
 			{children}
 		</label>
