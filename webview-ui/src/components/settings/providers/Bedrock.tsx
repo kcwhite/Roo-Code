@@ -135,14 +135,21 @@ export const Bedrock = ({ apiConfiguration, setApiConfigurationField, selectedMo
 				Use custom VPC endpoint
 			</Checkbox>
 			{awsEndpointSelected && (
-				<VSCodeTextField
-					value={apiConfiguration?.awsBedrockEndpoint || ""}
-					style={{ width: "100%", marginTop: 3, marginBottom: 5 }}
-					type="url"
-					onInput={handleInputChange("awsBedrockEndpoint")}
-					placeholder="Enter VPC Endpoint URL (optional)"
-					data-testid="vpc-endpoint-input"
-				/>
+				<>
+					<VSCodeTextField
+						value={apiConfiguration?.awsBedrockEndpoint || ""}
+						style={{ width: "100%", marginTop: 3, marginBottom: 5 }}
+						type="url"
+						onInput={handleInputChange("awsBedrockEndpoint")}
+						placeholder="Enter VPC Endpoint URL (optional)"
+						data-testid="vpc-endpoint-input"
+					/>
+					<div className="text-sm text-vscode-descriptionForeground ml-6 mt-1 mb-3">
+						Examples:
+						<div className="ml-2">• https://vpce-xxx.bedrock.region.vpce.amazonaws.com/</div>
+						<div className="ml-2">• https://gateway.my-company.com/route/app/bedrock</div>
+					</div>
+				</>
 			)}
 		</>
 	)

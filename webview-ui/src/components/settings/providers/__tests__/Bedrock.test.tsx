@@ -250,6 +250,60 @@ describe("Bedrock Component", () => {
 		})
 	})
 
+	// Test Scenario 3: UI Elements Tests
+	describe("UI Elements", () => {
+		it("should display example URLs when VPC endpoint checkbox is checked", () => {
+			const apiConfiguration: Partial<ProviderSettings> = {
+				awsBedrockEndpoint: "https://example.com",
+				awsBedrockEndpointEnabled: true,
+				awsUseProfile: true,
+			}
+
+			render(
+				<Bedrock
+					apiConfiguration={apiConfiguration as ProviderSettings}
+					setApiConfigurationField={mockSetApiConfigurationField}
+				/>,
+			)
+
+			// Check that the VPC endpoint input is visible
+			expect(screen.getByTestId("vpc-endpoint-input")).toBeInTheDocument()
+
+			// Check for the example URLs section
+			// Since we don't have a specific testid for the examples section,
+			// we'll check for the text content
+			expect(screen.getByText("Examples:")).toBeInTheDocument()
+			expect(screen.getByText("• https://vpce-xxx.bedrock.region.vpce.amazonaws.com/")).toBeInTheDocument()
+			expect(screen.getByText("• https://gateway.my-company.com/route/app/bedrock")).toBeInTheDocument()
+		})
+
+		it("should hide example URLs when VPC endpoint checkbox is unchecked", () => {
+			const apiConfiguration: Partial<ProviderSettings> = {
+				awsBedrockEndpoint: "https://example.com",
+				awsBedrockEndpointEnabled: true,
+				awsUseProfile: true,
+			}
+
+			render(
+				<Bedrock
+					apiConfiguration={apiConfiguration as ProviderSettings}
+					setApiConfigurationField={mockSetApiConfigurationField}
+				/>,
+			)
+
+			// Initially the examples should be visible
+			expect(screen.getByText("Examples:")).toBeInTheDocument()
+
+			// Uncheck the VPC endpoint checkbox
+			fireEvent.click(screen.getByTestId("checkbox-input-use-custom-vpc-endpoint"))
+
+			// Now the examples should be hidden
+			expect(screen.queryByText("Examples:")).not.toBeInTheDocument()
+			expect(screen.queryByText("• https://vpce-xxx.bedrock.region.vpce.amazonaws.com/")).not.toBeInTheDocument()
+			expect(screen.queryByText("• https://gateway.my-company.com/route/app/bedrock")).not.toBeInTheDocument()
+		})
+	})
+
 	// Test Scenario 4: Error Handling Tests
 	describe("Error Handling", () => {
 		it("should handle invalid endpoint URLs gracefully", () => {
