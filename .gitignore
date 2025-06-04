@@ -8,9 +8,6 @@ mock/
 
 .DS_Store
 
-# IDEs
-.idea
-
 # Builds
 bin/
 *.vsix
@@ -43,3 +40,4 @@ logs
 .idea/
 .qodo/
 .vercel
+.roo/
